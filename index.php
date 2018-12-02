@@ -11,33 +11,32 @@
   </head>
   <body>
   <?php require_once 'formprocessor.php';?>
-  
+  <!-- Based on query type it will use bootstrap alert class -->
   <?php
     if (isset($_SESSION['message'])): ?>
     <div class = "alert alert-<?=$_SESSION['msg_type'] ?>">
 
     <?php
+        // Based on the message type it will echo it and then unset the session
         echo $_SESSION['message'];
         unset($_SESSION['message']);
         ?>
 
     </div>
+    <!-- End of if statment -->
     <?php endif ?>
   <div class = "container">
 
   <?php
-    $mysqli = new mysqli('127.0.0.1', 'root', "", 'newHospitalDB')
+    // Connect to databse 
+    $mysqli = new mysqli('127.0.0.1', 'root', "", 'v2HospitalDB')
     or die(mysqli_error($mysqli));
-
+    // Will select everthing from Doctor and display on the page
     $result = $mysqli->query("SELECT * FROM Doctor") or die($mysqli->error);
-    // pre_r($result);
-    // Fetches records for us. Create while loop to keep fetching until no more
-    // pre_r($result->fetch_assoc());
-    // pre_r($result->fetch_assoc());
     ?>
 
     
-
+    <!-- This is the format for the table with the folowing columns -->
     <div class="row justify-content-center">
         <table class="table">
             <thead>
@@ -53,9 +52,8 @@
 
             <?php
     // everything is fetched from db and stored in row
-      while($row = $result->fetch_assoc()):
-        //  var_dump($row);?>
-
+      while($row = $result->fetch_assoc()):?>
+        <!-- Each row will have its repsected column from the database -->
             <tr>
             <td> <?php echo $row['doctorID']; ?></td>
             <td> <?php echo $row['doctorFName']; ?></td>
@@ -65,7 +63,7 @@
             
 
             <td>
-                <a href="index.php?edit=<?php echo $row['idDepartment']; ?>"
+                <a href="index.php?edit=<?php echo $row['doctorID']; ?>"
                     class="btn btn-info">Edit</a>
                 <a href="formprocessor.php?delete=<?php echo $row['doctorID'];?>"
                      class="btn btn-danger">Delete</a>
@@ -74,11 +72,8 @@
             </tr>
             
             <?php endwhile;
-                //  var_dump($row);
-
             ?>
       
-                    
         
         </table>
         
@@ -86,7 +81,7 @@
     
     <?php
 
-    // Prints result in nice format
+    // This function prints the array in a nice format
     function pre_r($array) {
         echo '<pre>';
         print_r($array);
@@ -112,12 +107,12 @@
 
     <div label="form-group">
     <label> Department ID</label>
-    <input type="text" value="<?php echo $departmentID;?>" name="departmentID" class="form-control" placeholder="Enter DepartmentID">
+    <input type="text" value="<?php echo $idDepart;?>" name="departmentID" class="form-control" placeholder="Enter DepartmentID">
     </div>
 
     <div label = "form-group">
     <label> Speciality </label>
-    <input type="text" value="<?php echo $speciality;?>" name="speciality" class="form-control" placeholder="Enter Specialty">
+    <input type="text" value="<?php echo $special;?>" name="speciality" class="form-control" placeholder="Enter Specialty">
     </div>
 
     <div class="form-group">
