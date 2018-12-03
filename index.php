@@ -118,7 +118,7 @@
     <div class="form-group">
     <?php 
     if($update == true): ?>
-    <button class="btn btn-info" type="submit" name="update">Update</button>
+    <button class="btn btn-info" id="" type="submit" name="update">Update</button>
 <?php else: ?>
     <button class="btn btn-primary" type="submit" name="save">Save</button>
 <?php endif; ?>
